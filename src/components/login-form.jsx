@@ -18,21 +18,23 @@ export function LoginForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Sign in to application</h1>
+      <h2>Sign in to application</h2>
       <div>
-        <label htmlFor="username">username</label>{" "}
+        <label htmlFor="username">Username</label>{" "}
         <input
           type="text"
           name="username"
+          required
           value={formData.username}
           onChange={handleChange}
         />
       </div>
       <div>
-        <label htmlFor="password">password</label>{" "}
+        <label htmlFor="password">Password</label>{" "}
         <input
           type="password"
           name="password"
+          required
           value={formData.password}
           onChange={handleChange}
         />
