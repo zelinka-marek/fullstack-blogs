@@ -3,11 +3,13 @@ import { BlogDetails } from "./components/blog-details";
 import { LoginForm } from "./components/login-form";
 import { LogoutForm } from "./components/logout-form";
 import { NewBlogForm } from "./components/new-blog-form";
+import { Notification } from "./components/notification";
 import { createBlog, getBlogs } from "./services/blog";
 import { login } from "./services/login";
 import { getUser, removeUser, saveUser } from "./utils/auth";
 
 export function App() {
+  const [notification, setNotification] = useState(null);
   const [user, setUser] = useState(() => getUser());
   const [blogs, setBlogs] = useState([]);
 
@@ -23,12 +25,17 @@ export function App() {
     }
   }, [user]);
 
+  const notify = ({ status = "success", message }) => {
+    setNotification({ status, message });
+    setTimeout(() => setNotification(null), 3500);
+  };
+
   const loginUser = async (credentials) => {
     try {
       const user = await login(credentials);
       setUser(user);
     } catch {
-      alert("invalid username or password");
+      notify({ status: "error", message: "wrong username or password" });
     }
   };
 
@@ -40,14 +47,25 @@ export function App() {
     try {
       const blog = await createBlog(data);
       setBlogs((blogs) => blogs.concat(blog));
-      alert("Blog saved.");
+      notify({
+        message: `a new blog "${data.title}" by "${data.author}" was added`,
+      });
     } catch (error) {
-      alert("Failed to add a new blog, try again!");
+      notify({
+        status: "error",
+        message: "Failed to add a new blog, try again!",
+      });
     }
   };
 
   return (
     <div className="app">
+      {notification && (
+        <Notification
+          status={notification.status}
+          message={notification.message}
+        />
+      )}
       {user ? (
         <>
           <h1>Blogs</h1>

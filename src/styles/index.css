@@ -32,3 +32,21 @@ h1 {
   margin-right: auto;
   margin-left: auto;
 }
+
+.notification {
+  padding: 8px 16px;
+  font-size: 18px;
+  border: 2px solid;
+  border-radius: 4px;
+  background-color: lightgray;
+}
+
+.notification.success {
+  color: green;
+  border-color: green;
+}
+
+.notification.error {
+  color: red;
+  border-color: red;
+}
