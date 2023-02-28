@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { BlogDetails } from "./components/blog-details";
 import { LoginForm } from "./components/login-form";
 import { LogoutForm } from "./components/logout-form";
-import { getBlogs } from "./services/blog";
+import { NewBlogForm } from "./components/new-blog-form";
+import { createBlog, getBlogs } from "./services/blog";
 import { login } from "./services/login";
 import { getUser, removeUser, saveUser } from "./utils/auth";
 
@@ -23,12 +24,26 @@ export function App() {
   }, [user]);
 
   const loginUser = async (credentials) => {
-    const user = await login(credentials);
-    setUser(user);
+    try {
+      const user = await login(credentials);
+      setUser(user);
+    } catch {
+      alert("invalid username or password");
+    }
   };
 
   const logoutUser = () => {
     setUser(null);
+  };
+
+  const addBlog = async (data) => {
+    try {
+      const blog = await createBlog(data);
+      setBlogs((blogs) => blogs.concat(blog));
+      alert("Blog saved.");
+    } catch (error) {
+      alert("Failed to add a new blog, try again!");
+    }
   };
 
   return (
@@ -40,9 +55,12 @@ export function App() {
             <div>Signed in as {user.name ?? user.username}.</div>
             <LogoutForm onSubmit={logoutUser} />
           </div>
-          {blogs.map((blog) => (
-            <BlogDetails key={blog.id} blog={blog} />
-          ))}
+          <NewBlogForm onSubmit={addBlog} />
+          <div style={{ marginTop: 16 }}>
+            {blogs.map((blog) => (
+              <BlogDetails key={blog.id} blog={blog} />
+            ))}
+          </div>
         </>
       ) : (
         <LoginForm onSubmit={loginUser} />

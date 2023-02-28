@@ -19,6 +19,15 @@ export function getUser() {
   }
 }
 
+export function getUserToken() {
+  const user = getUser();
+  if (!user) {
+    throw new Error("user missing");
+  }
+
+  return user.token;
+}
+
 export function removeUser() {
   localStorage.removeItem(KEY);
 }
