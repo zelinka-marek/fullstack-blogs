@@ -76,7 +76,9 @@ export function App() {
         <>
           <h1>Blogs</h1>
           <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
-            <div>Signed in as {user.name ?? user.username}.</div>
+            <span>
+              Signed in as <b>{user.name || user.username}</b>.
+            </span>
             <LogoutForm onSubmit={logoutUser} />
           </div>
           <Togglable ref={blogFormRef} openButtonLabel="New note">
