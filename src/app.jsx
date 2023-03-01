@@ -15,6 +15,7 @@ export function App() {
   const [user, setUser] = useState(() => getUser());
 
   const [blogs, setBlogs] = useState([]);
+  const sortedBlogs = blogs.sort((blogA, blogB) => blogB.likes - blogA.likes);
 
   const blogFormRef = useRef(null);
 
@@ -97,7 +98,7 @@ export function App() {
             <NewBlogForm onSubmit={addBlog} />
           </Togglable>
           <div style={{ marginTop: 16 }}>
-            {blogs.map((blog) => (
+            {sortedBlogs.map((blog) => (
               <BlogDetails
                 key={blog.id}
                 blog={blog}
