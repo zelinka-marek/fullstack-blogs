@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BlogDetails } from "./components/blog-details";
 import { LoginForm } from "./components/login-form";
 import { LogoutForm } from "./components/logout-form";
 import { NewBlogForm } from "./components/new-blog-form";
 import { Notification } from "./components/notification";
+import { Togglable } from "./components/togglable";
 import { createBlog, getBlogs } from "./services/blog";
 import { login } from "./services/login";
 import { getUser, removeUser, saveUser } from "./utils/auth";
 
 export function App() {
   const [notification, setNotification] = useState(null);
+
   const [user, setUser] = useState(() => getUser());
+
   const [blogs, setBlogs] = useState([]);
+
+  const blogFormRef = useRef(null);
 
   useEffect(() => {
     getBlogs().then(setBlogs);
@@ -50,6 +55,7 @@ export function App() {
       notify({
         message: `a new blog "${data.title}" by "${data.author}" was added`,
       });
+      blogFormRef.current.toggleVisiblity();
     } catch (error) {
       notify({
         status: "error",
@@ -73,7 +79,9 @@ export function App() {
             <div>Signed in as {user.name ?? user.username}.</div>
             <LogoutForm onSubmit={logoutUser} />
           </div>
-          <NewBlogForm onSubmit={addBlog} />
+          <Togglable ref={blogFormRef} openButtonLabel="New note">
+            <NewBlogForm onSubmit={addBlog} />
+          </Togglable>
           <div style={{ marginTop: 16 }}>
             {blogs.map((blog) => (
               <BlogDetails key={blog.id} blog={blog} />
