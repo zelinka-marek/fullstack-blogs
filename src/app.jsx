@@ -19,7 +19,7 @@ export function App() {
   const blogFormRef = useRef(null);
 
   useEffect(() => {
-    getBlogs().then(setBlogs);
+    fetchBlogs();
   }, []);
 
   useEffect(() => {
@@ -29,6 +29,11 @@ export function App() {
       removeUser(user);
     }
   }, [user]);
+
+  const fetchBlogs = async () => {
+    const blogs = await getBlogs();
+    setBlogs(blogs);
+  };
 
   const notify = ({ status = "success", message }) => {
     setNotification({ status, message });
@@ -50,8 +55,8 @@ export function App() {
 
   const addBlog = async (data) => {
     try {
-      const blog = await createBlog(data);
-      setBlogs((blogs) => blogs.concat(blog));
+      await createBlog(data);
+      await fetchBlogs();
       notify({
         message: `a new blog "${data.title}" by "${data.author}" was added`,
       });
