@@ -17,3 +17,12 @@ export async function createBlog(data) {
 
   return response.data;
 }
+
+export async function updateBlog(id, data) {
+  const token = getUserToken();
+  const response = await axios.put(`${baseUrl}/${id}`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data;
+}

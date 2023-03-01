@@ -8,7 +8,7 @@ const blogStyle = {
 };
 
 export function BlogDetails(props) {
-  const { blog } = props;
+  const { blog, onLike } = props;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -40,7 +40,9 @@ export function BlogDetails(props) {
         </div>
         <div>
           {blog.likes} {blog.likes === 1 ? "like" : "likes"}{" "}
-          <button type="button">Like</button>
+          <button type="button" onClick={onLike}>
+            Like
+          </button>
         </div>
         <div>{blog.user.name || blog.user.username}</div>
       </div>

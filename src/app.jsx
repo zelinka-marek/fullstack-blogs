@@ -5,7 +5,7 @@ import { LogoutForm } from "./components/logout-form";
 import { NewBlogForm } from "./components/new-blog-form";
 import { Notification } from "./components/notification";
 import { Togglable } from "./components/togglable";
-import { createBlog, getBlogs } from "./services/blog";
+import { createBlog, getBlogs, updateBlog } from "./services/blog";
 import { login } from "./services/login";
 import { getUser, removeUser, saveUser } from "./utils/auth";
 
@@ -69,6 +69,13 @@ export function App() {
     }
   };
 
+  const likeBlog = async (id) => {
+    const blog = blogs.find((blog) => blog.id === id);
+    const data = { ...blog, likes: blog.likes + 1 };
+    await updateBlog(id, data);
+    await fetchBlogs();
+  };
+
   return (
     <div className="app">
       {notification && (
@@ -91,7 +98,11 @@ export function App() {
           </Togglable>
           <div style={{ marginTop: 16 }}>
             {blogs.map((blog) => (
-              <BlogDetails key={blog.id} blog={blog} />
+              <BlogDetails
+                key={blog.id}
+                blog={blog}
+                onLike={() => likeBlog(blog.id)}
+              />
             ))}
           </div>
         </>
