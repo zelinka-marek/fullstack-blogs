@@ -5,7 +5,12 @@ import { LogoutForm } from "./components/logout-form";
 import { NewBlogForm } from "./components/new-blog-form";
 import { Notification } from "./components/notification";
 import { Togglable } from "./components/togglable";
-import { createBlog, getBlogs, updateBlog } from "./services/blog";
+import {
+  createBlog,
+  deleteBlogById,
+  getBlogs,
+  updateBlogById,
+} from "./services/blog";
 import { login } from "./services/login";
 import { getUser, removeUser, saveUser } from "./utils/auth";
 
@@ -73,7 +78,17 @@ export function App() {
   const likeBlog = async (id) => {
     const blog = blogs.find((blog) => blog.id === id);
     const data = { ...blog, likes: blog.likes + 1 };
-    await updateBlog(id, data);
+    await updateBlogById(id, data);
+    await fetchBlogs();
+  };
+
+  const deleteBlog = async (id) => {
+    const blog = blogs.find((blog) => blog.id === id);
+    if (!confirm(`Remove blog "${blog.title}" by "${blog.author}"`)) {
+      return;
+    }
+
+    await deleteBlogById(id);
     await fetchBlogs();
   };
 
@@ -102,7 +117,9 @@ export function App() {
               <BlogDetails
                 key={blog.id}
                 blog={blog}
+                isOwner={blog.user.username === user.username}
                 onLike={() => likeBlog(blog.id)}
+                onDelete={() => deleteBlog(blog.id)}
               />
             ))}
           </div>

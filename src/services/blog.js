@@ -18,9 +18,18 @@ export async function createBlog(data) {
   return response.data;
 }
 
-export async function updateBlog(id, data) {
+export async function updateBlogById(id, data) {
   const token = getUserToken();
   const response = await axios.put(`${baseUrl}/${id}`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data;
+}
+
+export async function deleteBlogById(id) {
+  const token = getUserToken();
+  const response = await axios.delete(`${baseUrl}/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

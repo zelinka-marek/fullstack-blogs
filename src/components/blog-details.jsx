@@ -8,7 +8,7 @@ const blogStyle = {
 };
 
 export function BlogDetails(props) {
-  const { blog, onLike } = props;
+  const { blog, isOwner, onLike, onDelete } = props;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -25,12 +25,19 @@ export function BlogDetails(props) {
         <span>
           {blog.title} {blog.author}
         </span>
-        <button
-          type="button"
-          onClick={() => setExpanded((expanded) => !expanded)}
-        >
-          {expanded ? "Hide" : "View"}
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          {isOwner && (
+            <button type="button" onClick={onDelete}>
+              Delete
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setExpanded((expanded) => !expanded)}
+          >
+            {expanded ? "Hide" : "View"}
+          </button>
+        </div>
       </div>
       <div style={expanded ? { marginTop: 8 } : { display: "none" }}>
         <div>
