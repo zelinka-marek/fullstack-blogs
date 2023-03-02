@@ -84,7 +84,7 @@ export function App() {
 
   const deleteBlog = async (id) => {
     const blog = blogs.find((blog) => blog.id === id);
-    if (!confirm(`Remove blog "${blog.title}" by "${blog.author}"`)) {
+    if (!window.confirm(`Remove blog "${blog.title}" by "${blog.author}"`)) {
       return;
     }
 

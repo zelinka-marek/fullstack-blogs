@@ -42,7 +42,7 @@ export function BlogDetails(props) {
       </div>
       <div style={expanded ? { marginTop: 8 } : { display: "none" }}>
         <div>
-          <a href={blog.url} target="_blank">
+          <a href={blog.url} target="_blank" rel="noreferrer">
             {blog.url}
           </a>
         </div>
