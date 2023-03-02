@@ -29,6 +29,7 @@ export function NewBlogForm(props) {
         <input
           type="text"
           name="title"
+          id="title"
           required
           value={formData.title}
           onChange={handleChange}
@@ -39,6 +40,8 @@ export function NewBlogForm(props) {
         <input
           type="text"
           name="author"
+          id="author"
+          required
           value={formData.author}
           onChange={handleChange}
         />
@@ -48,6 +51,7 @@ export function NewBlogForm(props) {
         <input
           type="url"
           name="url"
+          id="url"
           required
           value={formData.url}
           onChange={handleChange}

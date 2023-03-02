@@ -25,6 +25,7 @@ export function LoginForm(props) {
         <input
           type="text"
           name="username"
+          id="username"
           required
           value={formData.username}
           onChange={handleChange}
@@ -35,6 +36,7 @@ export function LoginForm(props) {
         <input
           type="password"
           name="password"
+          id="password"
           required
           value={formData.password}
           onChange={handleChange}
