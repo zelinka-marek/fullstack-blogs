@@ -23,9 +23,9 @@ export function BlogDetails(props) {
           gap: 8,
         }}
       >
-        <span>
-          {blog.title} {blog.author}
-        </span>
+        <div>
+          <span>{blog.title}</span> <span>{blog.author}</span>
+        </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           {isOwner && (
             <button type="button" onClick={onDelete}>
