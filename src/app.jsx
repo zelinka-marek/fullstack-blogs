@@ -118,8 +118,8 @@ export function App() {
                 key={blog.id}
                 blog={blog}
                 isOwner={blog.user.username === user.username}
-                onLike={() => likeBlog(blog.id)}
-                onDelete={() => deleteBlog(blog.id)}
+                onLike={likeBlog}
+                onDelete={deleteBlog}
               />
             ))}
           </div>

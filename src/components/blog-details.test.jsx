@@ -8,15 +8,16 @@ describe("<BlogDetails />", () => {
     cleanup();
   });
 
-  it("should only display blog's title and author", () => {
-    const validBlog = {
-      title: "A good title",
-      author: "Interesting Author",
-      url: "https://interestingauthor.com/blog/a-ggod-title",
-      likes: 0,
-      user: { username: "mzelinka" },
-    };
+  const validBlog = {
+    id: "5a422a851b54a676234d17f7",
+    title: "React patterns",
+    author: "Michael Chan",
+    url: "https://reactpatterns.com/",
+    likes: 7,
+    user: { username: "mzelinka", name: "Marek Zelinka" },
+  };
 
+  it("should only display blog's title and author", () => {
     render(<BlogDetails blog={validBlog} />);
 
     expect(screen.getByText(validBlog.title)).toBeVisible();
@@ -26,14 +27,6 @@ describe("<BlogDetails />", () => {
   });
 
   it("should display likes and url when expanded", async () => {
-    const validBlog = {
-      title: "A good title",
-      author: "Interesting Author",
-      url: "https://interestingauthor.com/blog/a-ggod-title",
-      likes: 0,
-      user: { username: "mzelinka" },
-    };
-
     render(<BlogDetails blog={validBlog} />);
 
     const button = screen.getByRole("button", { name: /view/i });
@@ -44,13 +37,6 @@ describe("<BlogDetails />", () => {
   });
 
   it("should call the onLike hanlder when like button is clicked twice", async () => {
-    const validBlog = {
-      title: "A good title",
-      author: "Interesting Author",
-      url: "https://interestingauthor.com/blog/a-ggod-title",
-      likes: 0,
-      user: { username: "mzelinka" },
-    };
     const onLike = vi.fn();
 
     render(<BlogDetails blog={validBlog} onLike={onLike} />);
@@ -58,10 +44,24 @@ describe("<BlogDetails />", () => {
     const viewButton = screen.getByRole("button", { name: /view/i });
     await userEvent.click(viewButton);
 
-    const button = screen.getByRole("button", { name: /like/i });
-    await userEvent.click(button);
-    await userEvent.click(button);
+    const likeButton = screen.getByRole("button", { name: /like/i });
+    await userEvent.click(likeButton);
+    await userEvent.click(likeButton);
 
     expect(onLike).toHaveBeenCalledTimes(2);
+  });
+
+  it("should call onLike with blog id", async () => {
+    const onLike = vi.fn();
+
+    render(<BlogDetails blog={validBlog} onLike={onLike} />);
+
+    const viewButton = screen.getByRole("button", { name: /view/i });
+    await userEvent.click(viewButton);
+
+    const likeButton = screen.getByRole("button", { name: /like/i });
+    await userEvent.click(likeButton);
+
+    expect(onLike).toHaveBeenCalledWith(validBlog.id);
   });
 });

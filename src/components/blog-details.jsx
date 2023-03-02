@@ -28,7 +28,7 @@ export function BlogDetails(props) {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           {isOwner && (
-            <button type="button" onClick={onDelete}>
+            <button type="button" onClick={() => onDelete(blog.id)}>
               Delete
             </button>
           )}
@@ -48,7 +48,7 @@ export function BlogDetails(props) {
         </div>
         <div>
           {blog.likes} {blog.likes === 1 ? "like" : "likes"}{" "}
-          <button type="button" onClick={onLike}>
+          <button type="button" onClick={() => onLike(blog.id)}>
             Like
           </button>
         </div>
