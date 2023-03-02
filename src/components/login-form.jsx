@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 
 export function LoginForm(props) {
@@ -43,3 +44,7 @@ export function LoginForm(props) {
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

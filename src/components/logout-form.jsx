@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export function LogoutForm(props) {
   const { onSubmit } = props;
 
@@ -13,3 +15,7 @@ export function LogoutForm(props) {
     </form>
   );
 }
+
+LogoutForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

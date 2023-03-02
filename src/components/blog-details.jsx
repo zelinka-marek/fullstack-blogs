@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 
 const blogStyle = {
@@ -56,3 +57,19 @@ export function BlogDetails(props) {
     </div>
   );
 }
+
+BlogDetails.propTypes = {
+  blog: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  isOwner: PropTypes.bool.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 
 const initialFormData = { title: "", author: "", url: "" };
@@ -56,3 +57,7 @@ export function NewBlogForm(props) {
     </form>
   );
 }
+
+NewBlogForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

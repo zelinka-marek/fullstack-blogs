@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export function Notification(props) {
   const { status = "success", message } = props;
 
@@ -7,3 +9,8 @@ export function Notification(props) {
     </div>
   );
 }
+
+Notification.propTypes = {
+  status: PropTypes.oneOf(["success", "error"]),
+  message: PropTypes.string.isRequired,
+};
