@@ -114,7 +114,7 @@ export function App() {
             <p>Signed in as {user.name || user.username}.</p>
             <LogoutForm onSubmit={logoutUser} />
           </div>
-          <Togglable ref={blogFormRef} openButtonLabel="New note">
+          <Togglable ref={blogFormRef} openButtonLabel="New blog">
             <NewBlogForm onSubmit={addBlog} />
           </Togglable>
           <div style={{ marginTop: 16 }}>

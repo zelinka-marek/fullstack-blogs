@@ -29,6 +29,7 @@ Cypress.Commands.add("login", (credentials) => {
   cy.request("post", `${Cypress.env("BACKEND")}/login`, credentials).then(
     ({ body }) => {
       localStorage.setItem("loggedInUser", JSON.stringify(body));
+
       cy.visit("");
     }
   );
