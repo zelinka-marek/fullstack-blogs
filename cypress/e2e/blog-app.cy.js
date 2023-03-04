@@ -128,6 +128,34 @@ describe("Blog app", () => {
           cy.findByText(/intro to react: part 2/i).should("not.exist");
         });
       });
+
+      describe("when logged in as a diferent user", () => {
+        beforeEach(() => {
+          cy.findByRole("button", { name: /sign out/i }).click();
+
+          cy.findByRole("textbox", { name: /username/i }).type("mzelinka");
+          cy.findByLabelText(/password/i).type("123456");
+          cy.findByRole("button", { name: /sign in/i }).click();
+        });
+
+        describe("with an expanded blog", () => {
+          beforeEach(() => {
+            cy.findByText(/intro to react: part 1/i)
+              .parent()
+              .parent()
+              .findByRole("button", { name: /view/i })
+              .click();
+          });
+
+          it("should not to able to delete a blog", () => {
+            cy.findByText(/intro to react: part 1/i)
+              .parent()
+              .parent()
+              .findByRole("button", { name: /delete/i })
+              .should("not.exist");
+          });
+        });
+      });
     });
   });
 });
