@@ -58,5 +58,62 @@ describe("Blog app", () => {
 
       cy.findByText(validBlog.title).should("exist");
     });
+
+    describe("several blogs exists", () => {
+      beforeEach(() => {
+        cy.findByRole("button", { name: /new blog/i }).click();
+        cy.findByRole("textbox", { name: /title/i }).type(
+          "Intro to React: Part 1"
+        );
+        cy.findByRole("textbox", { name: /author/i }).type("Marek zelinka");
+        cy.findByRole("textbox", { name: /url/i }).type(
+          "https://marekzelinka.dev/blog/intro-to-react-part-1"
+        );
+        cy.findByRole("button", { name: /save blog/i }).click();
+        cy.findByRole("button", { name: /new blog/i }).click();
+        cy.findByRole("textbox", { name: /title/i }).type(
+          "Intro to React: Part 2"
+        );
+        cy.findByRole("textbox", { name: /author/i }).type("Marek zelinka");
+        cy.findByRole("textbox", { name: /url/i }).type(
+          "https://marekzelinka.dev/blog/intro-to-react-part-2"
+        );
+        cy.findByRole("button", { name: /save blog/i }).click();
+        cy.findByRole("button", { name: /new blog/i }).click();
+        cy.findByRole("textbox", { name: /title/i }).type(
+          "Intro to React: Part 3"
+        );
+        cy.findByRole("textbox", { name: /author/i }).type("Marek zelinka");
+        cy.findByRole("textbox", { name: /url/i }).type(
+          "https://marekzelinka.dev/blog/intro-to-react-part-3"
+        );
+        cy.findByRole("button", { name: /save blog/i }).click();
+      });
+
+      describe("with an expanded blog", () => {
+        beforeEach(() => {
+          cy.findByText(/intro to react: part 2/i)
+            .parent()
+            .parent()
+            .findByRole("button", { name: /view/i })
+            .click();
+        });
+
+        it.only("should be able to like a blog", () => {
+          cy.findByText(/intro to react: part 2/i)
+            .parent()
+            .parent()
+            .parent()
+            .findByRole("button", { name: /like/i })
+            .click();
+          cy.findByText(/intro to react: part 2/i)
+            .parent()
+            .parent()
+            .parent()
+            .findByText(/1 like/i)
+            .should("exist");
+        });
+      });
+    });
   });
 });
