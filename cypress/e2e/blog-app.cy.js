@@ -6,6 +6,11 @@ describe("Blog app", () => {
       username: "mluukkai",
       password: "salainen",
     });
+    cy.request("post", `${Cypress.env("BACKEND")}/users/`, {
+      name: "Marek Zelinka",
+      username: "mzelinka",
+      password: "123456",
+    });
     cy.visit("");
   });
 
@@ -99,7 +104,7 @@ describe("Blog app", () => {
             .click();
         });
 
-        it.only("should be able to like a blog", () => {
+        it("should be able to like a blog", () => {
           cy.findByText(/intro to react: part 2/i)
             .parent()
             .parent()
@@ -112,6 +117,15 @@ describe("Blog app", () => {
             .parent()
             .findByText(/1 like/i)
             .should("exist");
+        });
+
+        it("should be able to delete a blog", () => {
+          cy.findByText(/intro to react: part 2/i)
+            .parent()
+            .parent()
+            .findByRole("button", { name: /delete/i })
+            .click();
+          cy.findByText(/intro to react: part 2/i).should("not.exist");
         });
       });
     });
